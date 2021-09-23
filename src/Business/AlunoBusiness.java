@@ -12,4 +12,13 @@ public class AlunoBusiness {
             throw new ValidateException("Sobrenome Obrigatorio!");
         }
     }
+    public AlunoEntity getAlunoById(){
+        return null;
+    }
+    public void create(AlunoEntity alunoEntity) {
+    }
+    public void update(AlunoEntity alunoEntity){
+    }
+    public void delete(){
+    }
 }

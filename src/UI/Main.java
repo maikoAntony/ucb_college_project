@@ -2,6 +2,7 @@ package UI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Main extends FaculdadeFrame {
     private JPanel rootPanel;
@@ -29,6 +30,25 @@ public class Main extends FaculdadeFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new Aluno();
+                dispose();
+            }
+        });
+        this.buttonExcluir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO
+            }
+        });
+        this.buttonEditar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO
+            }
+        });
+        this.buttonMensalidade.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new Mensalidade();
                 dispose();
             }
         });

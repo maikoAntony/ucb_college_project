@@ -42,6 +42,13 @@ public class Aluno extends FaculdadeFrame {
                 handleSave();
             }
         });
+        this.buttonSair.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new Main();
+                dispose();
+            }
+        });
     }
 
     private void handleSave() {
@@ -61,6 +68,7 @@ public class Aluno extends FaculdadeFrame {
 
             AlunoEntity alunoEntity = new AlunoEntity(nome, sobrenome, cursoTipo, promo);
             this.mAlunoBusiness.validate(alunoEntity);
+            this.mAlunoBusiness.create(alunoEntity);
         } catch (ValidateException e){
             JOptionPane.showMessageDialog(new JFrame(), e.getMessage(), "Dados Incompletos", JOptionPane.ERROR_MESSAGE);
         }
