@@ -1,4 +1,7 @@
+package UI;
+
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 public class Main extends FaculdadeFrame {
     private JPanel rootPanel;
@@ -18,5 +21,16 @@ public class Main extends FaculdadeFrame {
 
         super.defautConfigurations();
 
+        this.setEvents();
+    }
+    private void setEvents(){
+        // Classe Anonima
+        this.buttonNovo.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new Aluno();
+                dispose();
+            }
+        });
     }
 }
