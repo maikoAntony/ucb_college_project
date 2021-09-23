@@ -1,6 +1,7 @@
 package Entity;
 
 public class AlunoEntity {
+    private int id;
     private String nome;
     private String sobrenome;
     private CursoTipo cursoTipo;
@@ -43,5 +44,13 @@ public class AlunoEntity {
 
     public void setPromo(boolean promo) {
         this.promo = promo;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
