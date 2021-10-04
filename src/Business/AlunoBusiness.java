@@ -1,9 +1,12 @@
 package Business;
 
 import Entity.AlunoEntity;
+import Entity.CursoTipo;
+import Entity.InscriçõesEntity;
 import Infrastructure.ValidateException;
 import repository.AlunoRepository;
 
+import javax.print.attribute.standard.Finishings;
 import java.util.List;
 
 public class AlunoBusiness {
@@ -60,6 +63,21 @@ public class AlunoBusiness {
     }
 
     private void mAlunoRepositorydelete(int id) {
+
+    }
+    public InscriçõesEntity getInscrições(){
+        InscriçõesEntity inscriçõesEntity = new InscriçõesEntity();
+
+        List<AlunoEntity> list = this.getList();
+        for (AlunoEntity alunoEntity: list){
+            if(alunoEntity.getCursoTipo() == CursoTipo.BES)
+                inscriçõesEntity.setBES(inscriçõesEntity.getBES()+ 1);
+            else if (alunoEntity.getCursoTipo() == CursoTipo.BCC)
+            inscriçõesEntity.setBCC(inscriçõesEntity.getBCC()+ 1);
+            else
+            inscriçõesEntity.setADS(inscriçõesEntity.getADS()+ 1);
+        }
+        return inscriçõesEntity;
     }
 
 

@@ -2,8 +2,11 @@ package UI;
 
 import Business.AlunoBusiness;
 import Entity.AlunoEntity;
+import Entity.InscriçõesEntity;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,13 +24,14 @@ public class Main extends FaculdadeFrame {
     private JLabel labelADS;
 
     private AlunoBusiness malunoBusiness;
+    private int mAlunoId = 0;
     /**
      * Construtor
      */
     public Main() {
         this.setContentPane(rootPanel);
         this.setSize(800, 450);
-        this.setTitle("Faculdade >>>");
+        this.setTitle("WING COLLEGE ");
 
         this.malunoBusiness = new AlunoBusiness();
 
@@ -55,6 +59,9 @@ public class Main extends FaculdadeFrame {
         this.buttonExcluir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (mAlunoId == 0){
+                    JOptionPane.showMessageDialog(new JFrame(), "É necessário selecionar um aluno!", "Aluno não selecionado!", JOptionPane.ERROR_MESSAGE);
+                }
                 // TODO
             }
         });
@@ -62,15 +69,37 @@ public class Main extends FaculdadeFrame {
         this.buttonEditar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO
+                if (mAlunoId == 0){
+                    JOptionPane.showMessageDialog(new JFrame(), "É necessário selecionar um aluno!", "Aluno não selecionado!", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    Aluno aluno = new Aluno();
+                    aluno.setAlunoId(mAlunoId);
+                    dispose();
+                }
             }
         });
         //Gera boleto de mensalidade
         this.buttonMensalidade.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Mensalidade();
-                dispose();
+                if (mAlunoId == 0){
+                    JOptionPane.showMessageDialog(new JFrame(), "É necessário selecionar um aluno!", "Aluno não selecionado!", JOptionPane.ERROR_MESSAGE);
+                }else {
+                    new Mensalidade();
+                    dispose();
+                }
+            }
+        });
+
+        this.tableAlunos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if(e.getValueIsAdjusting()){
+
+                    if(tableAlunos.getSelectedRow() != -1){
+                        mAlunoId = Integer.parseInt(tableAlunos.getModel().getValueAt(tableAlunos.getSelectedRow(), 4).toString());
+                    }
+                }
             }
         });
     }
@@ -93,5 +122,11 @@ public class Main extends FaculdadeFrame {
         }
         this.tableAlunos.clearSelection();
         this.tableAlunos.setModel(model);
+        this.tableAlunos.removeColumn(this.tableAlunos.getColumnModel().getColumn(4));
+
+        InscriçõesEntity inscriçõesEntity = this.malunoBusiness.getInscrições();
+        this.labelEng.setText("BES: " + inscriçõesEntity.getBES());
+        this.labelCiencias.setText("BCC: " + inscriçõesEntity.getBCC());
+        this.labelADS.setText("ADS: " + inscriçõesEntity.getADS());
     }
 }

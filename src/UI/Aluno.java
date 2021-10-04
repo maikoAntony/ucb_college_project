@@ -21,6 +21,7 @@ public class Aluno extends FaculdadeFrame {
     private JButton buttonSalvar;
 
     private AlunoBusiness mAlunoBusiness;
+    private int mAlunoID = 0;
 
     public Aluno() {
         this.setContentPane(rootPanel);
@@ -76,6 +77,16 @@ public class Aluno extends FaculdadeFrame {
         } catch (ValidateException e) {
             JOptionPane.showMessageDialog(new JFrame(), e.getMessage(), "Dados Incompletos", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    public void setmAlunoID(int id){
+        this.mAlunoID = id;
+        AlunoEntity alunoEntity = this.mAlunoBusiness.getAlunoById(id);
+        this.textNome.setText(alunoEntity.getNome());
+        this.textSobrenome.setText(alunoEntity.getSobrenome());
+        this.checPromo.setSelected(alunoEntity.setPromo());
+        this.radioBES.setSelected(alunoEntity.getCursoTipo() == CursoTipo.BES);
+        this.radioBCC.setSelected(alunoEntity.getCursoTipo() == CursoTipo.BCC);
+        this.radioADS.setSelected(alunoEntity.getCursoTipo() == CursoTipo.ADS);
     }
 
 }

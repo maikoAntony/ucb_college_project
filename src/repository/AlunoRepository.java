@@ -39,7 +39,6 @@ public class AlunoRepository {
      */
     public void create(AlunoEntity alunoEntity) {
         mAlunoList.add(alunoEntity);
-        String s = "";
     }
     /*
     Atualiza um aluno existente
