@@ -3,6 +3,7 @@ package UI;
 import Business.AlunoBusiness;
 import Entity.AlunoEntity;
 import Entity.InscriçõesEntity;
+import Infrastructure.ValidateException;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -59,10 +60,13 @@ public class Main extends FaculdadeFrame {
         this.buttonExcluir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (mAlunoId == 0){
+                try{
+                    malunoBusiness.delete(mAlunoId);
+                    mAlunoId = 0;
+                    loadData();
+                }catch (ValidateException excp){
                     JOptionPane.showMessageDialog(new JFrame(), "É necessário selecionar um aluno!", "Aluno não selecionado!", JOptionPane.ERROR_MESSAGE);
                 }
-                // TODO
             }
         });
         //Editar aluno
@@ -73,7 +77,7 @@ public class Main extends FaculdadeFrame {
                     JOptionPane.showMessageDialog(new JFrame(), "É necessário selecionar um aluno!", "Aluno não selecionado!", JOptionPane.ERROR_MESSAGE);
                 }else{
                     Aluno aluno = new Aluno();
-                    aluno.setAlunoId(mAlunoId);
+                    aluno.setAlunoID(mAlunoId);
                     dispose();
                 }
             }
@@ -85,7 +89,8 @@ public class Main extends FaculdadeFrame {
                 if (mAlunoId == 0){
                     JOptionPane.showMessageDialog(new JFrame(), "É necessário selecionar um aluno!", "Aluno não selecionado!", JOptionPane.ERROR_MESSAGE);
                 }else {
-                    new Mensalidade();
+                    Mensalidade mensalidade = new Mensalidade();
+                    mensalidade.setAlunoID(mAlunoId);
                     dispose();
                 }
             }

@@ -20,7 +20,7 @@ public class Aluno extends FaculdadeFrame {
     private JButton buttonSair;
     private JButton buttonSalvar;
 
-    private AlunoBusiness mAlunoBusiness;
+    private final AlunoBusiness mAlunoBusiness;
     private int mAlunoID = 0;
 
     public Aluno() {
@@ -51,7 +51,7 @@ public class Aluno extends FaculdadeFrame {
             }
         });
     }
-
+    //pega os dados, cria, valida, e cria no banco de dados
     private void handleSave() {
         try {
             String nome = this.textNome.getText().trim();
@@ -69,7 +69,15 @@ public class Aluno extends FaculdadeFrame {
 
             AlunoEntity alunoEntity = new AlunoEntity(nome, sobrenome, cursoTipo, promo);
             this.mAlunoBusiness.validate(alunoEntity);
-            this.mAlunoBusiness.create(alunoEntity);
+            //this.mAlunoBusiness.create(alunoEntity);
+
+            //Salva Aluno
+            if(mAlunoID == 0){
+                this.mAlunoBusiness.create(alunoEntity);
+            }else{
+                alunoEntity.setId(this.mAlunoID);
+                this.mAlunoBusiness.update(alunoEntity);
+            }
 
             new Main();
             dispose();
@@ -78,15 +86,17 @@ public class Aluno extends FaculdadeFrame {
             JOptionPane.showMessageDialog(new JFrame(), e.getMessage(), "Dados Incompletos", JOptionPane.ERROR_MESSAGE);
         }
     }
-    public void setmAlunoID(int id){
+    public void setAlunoID(int id){
         this.mAlunoID = id;
+
         AlunoEntity alunoEntity = this.mAlunoBusiness.getAlunoById(id);
         this.textNome.setText(alunoEntity.getNome());
         this.textSobrenome.setText(alunoEntity.getSobrenome());
-        this.checPromo.setSelected(alunoEntity.setPromo());
+        this.checPromo.setSelected(alunoEntity.isPromo());
         this.radioBES.setSelected(alunoEntity.getCursoTipo() == CursoTipo.BES);
         this.radioBCC.setSelected(alunoEntity.getCursoTipo() == CursoTipo.BCC);
         this.radioADS.setSelected(alunoEntity.getCursoTipo() == CursoTipo.ADS);
+        
     }
 
 }

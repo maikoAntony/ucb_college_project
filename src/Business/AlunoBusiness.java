@@ -59,12 +59,9 @@ public class AlunoBusiness {
         if (id == 0){
             throw new ValidateException("É necessário selecionar um aluno");
         }
-        this.mAlunoRepositorydelete(id);
+        this.mAlunoRepository.delete(id);
     }
 
-    private void mAlunoRepositorydelete(int id) {
-
-    }
     public InscriçõesEntity getInscrições(){
         InscriçõesEntity inscriçõesEntity = new InscriçõesEntity();
 
@@ -79,6 +76,4 @@ public class AlunoBusiness {
         }
         return inscriçõesEntity;
     }
-
-
 }
