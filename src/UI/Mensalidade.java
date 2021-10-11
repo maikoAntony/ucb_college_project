@@ -1,8 +1,7 @@
 package UI;
 
 import Business.AlunoBusiness;
-import Entity.AlunoEntity;
-import Entity.CursoTipo;
+import Entity.AbstractAluno;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -38,18 +37,10 @@ public class Mensalidade extends FaculdadeFrame {
     }
 
     public void setAlunoID(int id){
-        AlunoEntity alunoEntity = this.malunoBusiness.getAlunoById(id);
+        AbstractAluno abstractAluno = this.malunoBusiness.getAlunoById(id);
 
-        this.labelNS.setText(String.format("%s %s",  alunoEntity.getNome(), alunoEntity.getSobrenome()));
-        this.labelCurso.setText(alunoEntity.getCursoTipo().toString());
-
-        float custo = 500;
-        if (alunoEntity.isPromo()){
-            this.labelMensalidade.setText(String.format("R$ %.2f", custo * 0.7));
-        }else{
-            this.labelMensalidade.setText(String.format("R$ %.2f", custo));
+        this.labelNS.setText(String.format("%s %s",  abstractAluno.getNome(), abstractAluno.getSobrenome()));
+        this.labelCurso.setText(abstractAluno.getCursoTipo().toString());
+        this.labelMensalidade.setText(String.format("R$ %.2f", this.malunoBusiness.gerarMensalidade(abstractAluno)));
         }
-
-
-    }
 }

@@ -1,12 +1,11 @@
 package Business;
 
-import Entity.AlunoEntity;
+import Entity.AbstractAluno;
 import Entity.CursoTipo;
 import Entity.InscriçõesEntity;
 import Infrastructure.ValidateException;
 import repository.AlunoRepository;
 
-import javax.print.attribute.standard.Finishings;
 import java.util.List;
 
 public class AlunoBusiness {
@@ -21,36 +20,36 @@ public class AlunoBusiness {
     Faz a validação dos dados obrigatorios
     Se tudo estiver correto, uma exceção de validação não será lançada
      */
-    public void validate(AlunoEntity alunoEntity) throws ValidateException {
-        if ("".equals(alunoEntity.getNome())) {
+    public void validate(AbstractAluno abstractAluno) throws ValidateException {
+        if ("".equals(abstractAluno.getNome())) {
             throw new ValidateException("Nome Obrigatorio!");
         }
-        if ("".equals(alunoEntity.getSobrenome())) {
+        if ("".equals(abstractAluno.getSobrenome())) {
             throw new ValidateException("Sobrenome Obrigatorio!");
         }
     }
     /*
     Retorna aluno de acordo com o ID informado
      */
-    public AlunoEntity getAlunoById(int id) {
+    public AbstractAluno getAlunoById(int id) {
         return this.mAlunoRepository.getAlunoById(id);
     }
 
-    public List<AlunoEntity> getList(){
+    public List<AbstractAluno> getList(){
         return this.mAlunoRepository.getList();
     }
     /*
     Cria um novo aluno
      */
-    public void create(AlunoEntity alunoEntity) {
-        alunoEntity.setId(AlunoRepository.createID());
-        this.mAlunoRepository.create(alunoEntity);
+    public void create(AbstractAluno abstractAluno) {
+        abstractAluno.setId(AlunoRepository.createID());
+        this.mAlunoRepository.create(abstractAluno);
     }
     /*
     Atualiza um aluno existente
      */
-    public void update(AlunoEntity alunoEntity) {
-        this.mAlunoRepository.update(alunoEntity);
+    public void update(AbstractAluno abstractAluno) {
+        this.mAlunoRepository.update(abstractAluno);
     }
     /*
     Remove aluno
@@ -65,15 +64,19 @@ public class AlunoBusiness {
     public InscriçõesEntity getInscrições(){
         InscriçõesEntity inscriçõesEntity = new InscriçõesEntity();
 
-        List<AlunoEntity> list = this.getList();
-        for (AlunoEntity alunoEntity: list){
-            if(alunoEntity.getCursoTipo() == CursoTipo.BES)
+        List<AbstractAluno> list = this.getList();
+        for (AbstractAluno abstractAluno : list){
+            if(abstractAluno.getCursoTipo() == CursoTipo.BES)
                 inscriçõesEntity.setBES(inscriçõesEntity.getBES()+ 1);
-            else if (alunoEntity.getCursoTipo() == CursoTipo.BCC)
+            else if (abstractAluno.getCursoTipo() == CursoTipo.BCC)
             inscriçõesEntity.setBCC(inscriçõesEntity.getBCC()+ 1);
             else
             inscriçõesEntity.setADS(inscriçõesEntity.getADS()+ 1);
         }
         return inscriçõesEntity;
+    }
+
+    public float gerarMensalidade(AbstractAluno aluno){
+        return aluno.gerarMensalidade();
     }
 }

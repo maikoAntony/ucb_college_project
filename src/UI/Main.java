@@ -1,7 +1,7 @@
 package UI;
 
 import Business.AlunoBusiness;
-import Entity.AlunoEntity;
+import Entity.AbstractAluno;
 import Entity.InscriçõesEntity;
 import Infrastructure.ValidateException;
 
@@ -110,18 +110,18 @@ public class Main extends FaculdadeFrame {
     }
 
     private void loadData(){
-        List<AlunoEntity> list = this.malunoBusiness.getList();
+        List<AbstractAluno> list = this.malunoBusiness.getList();
 
         String[] columnNames = {"Nome", "Sobrenome", "Curso", "Promocional", "ID"};
         DefaultTableModel model = new DefaultTableModel(new Object[0][0], columnNames);
 
-        for (AlunoEntity alunoEntity: list){
+        for (AbstractAluno abstractAluno : list){
             Object[] o = new Object[5];
-            o[0] = alunoEntity.getNome();
-            o[1] = alunoEntity.getSobrenome();
-            o[2] = alunoEntity.getCursoTipo();
-            o[3] = alunoEntity.isPromo() ? "Sim": "Não";
-            o[4] = alunoEntity.getId();
+            o[0] = abstractAluno.getNome();
+            o[1] = abstractAluno.getSobrenome();
+            o[2] = abstractAluno.getCursoTipo();
+            o[3] = abstractAluno.isPromo() ? "Sim": "Não";
+            o[4] = abstractAluno.getId();
 
             model.addRow(o);
         }

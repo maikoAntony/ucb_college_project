@@ -1,7 +1,9 @@
 package UI;
 
 import Business.AlunoBusiness;
-import Entity.AlunoEntity;
+import Entity.AbstractAluno;
+import Entity.AlunoPromoEntity;
+import Entity.AlunoRegularEntity;
 import Entity.CursoTipo;
 import Infrastructure.ValidateException;
 
@@ -65,18 +67,22 @@ public class Aluno extends FaculdadeFrame {
             else
                 cursoTipo = CursoTipo.BES;
 
-            boolean promo = this.checPromo.isSelected();
 
-            AlunoEntity alunoEntity = new AlunoEntity(nome, sobrenome, cursoTipo, promo);
-            this.mAlunoBusiness.validate(alunoEntity);
-            //this.mAlunoBusiness.create(alunoEntity);
+            AbstractAluno abstractAluno;
+            if(this.checPromo.isSelected()) {
+                abstractAluno = new AlunoPromoEntity(nome, sobrenome, cursoTipo);
+            }else {
+                abstractAluno = new AlunoRegularEntity(nome, sobrenome, cursoTipo);
+            }
+
+            this.mAlunoBusiness.validate(abstractAluno);
 
             //Salva Aluno
             if(mAlunoID == 0){
-                this.mAlunoBusiness.create(alunoEntity);
+                this.mAlunoBusiness.create(abstractAluno);
             }else{
-                alunoEntity.setId(this.mAlunoID);
-                this.mAlunoBusiness.update(alunoEntity);
+                abstractAluno.setId(this.mAlunoID);
+                this.mAlunoBusiness.update(abstractAluno);
             }
 
             new Main();
@@ -89,13 +95,13 @@ public class Aluno extends FaculdadeFrame {
     public void setAlunoID(int id){
         this.mAlunoID = id;
 
-        AlunoEntity alunoEntity = this.mAlunoBusiness.getAlunoById(id);
-        this.textNome.setText(alunoEntity.getNome());
-        this.textSobrenome.setText(alunoEntity.getSobrenome());
-        this.checPromo.setSelected(alunoEntity.isPromo());
-        this.radioBES.setSelected(alunoEntity.getCursoTipo() == CursoTipo.BES);
-        this.radioBCC.setSelected(alunoEntity.getCursoTipo() == CursoTipo.BCC);
-        this.radioADS.setSelected(alunoEntity.getCursoTipo() == CursoTipo.ADS);
+        AbstractAluno abstractAluno = this.mAlunoBusiness.getAlunoById(id);
+        this.textNome.setText(abstractAluno.getNome());
+        this.textSobrenome.setText(abstractAluno.getSobrenome());
+        this.checPromo.setSelected(abstractAluno.isPromo());
+        this.radioBES.setSelected(abstractAluno.getCursoTipo() == CursoTipo.BES);
+        this.radioBCC.setSelected(abstractAluno.getCursoTipo() == CursoTipo.BCC);
+        this.radioADS.setSelected(abstractAluno.getCursoTipo() == CursoTipo.ADS);
         
     }
 

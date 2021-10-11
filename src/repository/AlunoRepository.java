@@ -1,6 +1,6 @@
 package repository;
 
-import Entity.AlunoEntity;
+import Entity.AbstractAluno;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ public class AlunoRepository {
     // ID do usuário estático
     private static int mAlunoID = 0;
     // Lista de Alunos - Banco de Dados
-    private static final List<AlunoEntity> mAlunoList = new ArrayList<>();
+    private static final List<AbstractAluno> mAlunoList = new ArrayList<>();
 
     // Faz a criação do ID do Usuario
     public static int createID() {
@@ -18,41 +18,41 @@ public class AlunoRepository {
     /*
     Retorna lista de alunos
      */
-    public List<AlunoEntity> getList() {
+    public List<AbstractAluno> getList() {
         return mAlunoList;
     }
     /*
     Retorna aluno de acordo com o ID informado
      */
-    public AlunoEntity getAlunoById(int id) {
-        AlunoEntity alunoEntity = null;
-        for (AlunoEntity aluno : mAlunoList) {
+    public AbstractAluno getAlunoById(int id) {
+        AbstractAluno abstractAluno = null;
+        for (AbstractAluno aluno : mAlunoList) {
             if (aluno.getId() == id) {
-                alunoEntity = aluno;
+                abstractAluno = aluno;
                 break;
             }
         }
-        return alunoEntity;
+        return abstractAluno;
     }
     /*
     Cria um novo aluno
      */
-    public void create(AlunoEntity alunoEntity) {
-        mAlunoList.add(alunoEntity);
+    public void create(AbstractAluno abstractAluno) {
+        mAlunoList.add(abstractAluno);
     }
     /*
     Atualiza um aluno existente
      */
 
-    public void update(AlunoEntity alunoEntity) {
-        for (AlunoEntity aluno : mAlunoList) {
-            if (aluno.getId() == alunoEntity.getId()) {
+    public void update(AbstractAluno abstractAluno) {
+        for (AbstractAluno aluno : mAlunoList) {
+            if (aluno.getId() == abstractAluno.getId()) {
 
                 // Atualiza os dados do aluno
-                aluno.setNome(alunoEntity.getNome());
-                aluno.setSobrenome(alunoEntity.getSobrenome());
-                aluno.setCursoTipo(alunoEntity.getCursoTipo());
-                aluno.setPromo(alunoEntity.isPromo());
+                aluno.setNome(abstractAluno.getNome());
+                aluno.setSobrenome(abstractAluno.getSobrenome());
+                aluno.setCursoTipo(abstractAluno.getCursoTipo());
+                aluno.setPromo(abstractAluno.isPromo());
             }
         }
     }
